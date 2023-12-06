@@ -23,10 +23,10 @@ def createpopulationbar():
     return chart
 def createpopulationgeo():
     from vega_datasets import data
-    us_population_df = pd.read_csv("./Population_And_Median_Income")
+    us_population_df = pd.read_csv("docs/Population_And_Median_Income")
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
     chart = alt.Chart(states_geo).mark_geoshape().encode(
-        color='Population:Q',
+        color= alt.Color('Population:Q',scale=alt.Scale(scheme='greensst'), title='Population'),
         tooltip=['State:N', 'Population:Q']
     ).transform_lookup(
         lookup='id',
@@ -35,15 +35,16 @@ def createpopulationgeo():
         type='albersUsa'
     ).properties(
         width=500,
-        height=300
+        height=300,
+        title='Population by State'
     )
     return chart
 def createpopulationdensitygeo():
     from vega_datasets import data
-    us_population_df = pd.read_csv("./Population_And_Median_Income")
+    us_population_df = pd.read_csv("docs/Population_And_Median_Income")
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
     chart = alt.Chart(states_geo).mark_geoshape().encode(
-        color='Population/SqMi:Q',
+        color=alt.Color('Population/SqMi:Q',scale=alt.Scale(scheme='blues'), title='Population/Sq/Mi'),
         tooltip=['State:N', 'Population/SqMi:Q']
     ).transform_lookup(
         lookup='id',
@@ -52,7 +53,8 @@ def createpopulationdensitygeo():
         type='albersUsa'
     ).properties(
         width=500,
-        height=300
+        height=300,
+        title='Population Density by State'
     )
     return chart
 
@@ -61,7 +63,12 @@ st.write("Group Members: Alex Gabriella-Faith || Ayse Yalcin || Maddox Leigh")
 st.header("Population by state")
 st.altair_chart(createpopulationbar())
 st.header("Population vs Population Density by State")
-st.altair_chart(createpopulationgeo())
-st.altair_chart(createpopulationdensitygeo())
+col1, col2 = st.columns(2)
+with col1:
+    st.altair_chart(createpopulationgeo())
+
+with col2:
+    st.altair_chart(createpopulationdensitygeo())
+
     
 
