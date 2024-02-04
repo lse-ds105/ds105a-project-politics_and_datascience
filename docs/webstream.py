@@ -62,6 +62,20 @@ def createbidenpollchart():
         height=400
     )
     return chart_points
+
+def plot_interactive(col_x,col_y):
+    with engine.connect() as conn:
+        pass
+    df = pd.read_sql_table("Interactive Data",con=engine)
+    chart = alt.Chart(df).mark_circle().encode(
+        x=col_x,
+        y=col_y,
+        tooltip=['Year', col_x, col_y]
+    )
+
+    return chart
+
+
 st.title('Political Data Science project')
 st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
 st.markdown("* Ayşe Yalçın (ayseyalcin1) | BSc in Politics and Data Science")
@@ -78,6 +92,15 @@ with col2:
     st.altair_chart(createpopulationdensitygeo())
 
 st.altair_chart(createbidenpollchart())
+
+st.markdown("# Interactive Graph")
+var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate'])
+var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate'])
+st.altair_chart(plot_interactive(var_x,var_y))
+
+
+
+
 #st.markdown("## Median Household income (2019-2021) against population density")
 #st.altair_chart(createpopagainstincome())
 #st.markdown("# UK data")
