@@ -3,11 +3,11 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 from vega_datasets import data
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
 
 def createpopulationgeo():
-    from vega_datasets import data
-    from sqlalchemy import create_engine
-    engine = create_engine('sqlite:///Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
+    
     with engine.connect() as conn:
         pass
     us_population_df = pd.read_sql_table("State Data",con=engine)
@@ -28,9 +28,6 @@ def createpopulationgeo():
     return chart
 
 def createpopulationdensitygeo():
-    from vega_datasets import data
-    from sqlalchemy import create_engine
-    engine = create_engine('sqlite:///Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
     with engine.connect() as conn:
         pass
     us_population_df = pd.read_sql_table("State Data",con=engine)
@@ -49,6 +46,22 @@ def createpopulationdensitygeo():
         title='Population Density by State'
     )
     return chart
+def createbidenpollchart():
+    with engine.connect() as conn:
+        pass
+    Biden_dataframe = pd.read_sql_table("Biden polls",con=engine)
+    df_long= pd.melt(Biden_dataframe, id_vars=['startDate'], value_vars=['approve', 'disapprove'],
+                  var_name='Opinion', value_name='Percentage')
+    chart_points = alt.Chart(df_long).mark_point(size=50, opacity=0.25, filled=True).encode(
+        x=alt.X('startDate:T', axis=alt.Axis(tickCount='month', format='%b %Y', labelAngle=-90)),
+        y=alt.Y('Percentage:Q', axis=alt.Axis(title='Percentage')),
+        color=alt.Color('Opinion:N', scale=alt.Scale(domain=['approve', 'disapprove'], range=['green', 'red']), legend=alt.Legend(title='Opinion')),
+    ).properties(
+        title='Biden Approval Rates Overtime',
+        width=600,
+        height=400
+    )
+    return chart_points
 st.title('Political Data Science project')
 st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
 st.markdown("* Ayşe Yalçın (ayseyalcin1) | BSc in Politics and Data Science")
@@ -64,6 +77,7 @@ with col1:
 with col2:
     st.altair_chart(createpopulationdensitygeo())
 
+st.altair_chart(createbidenpollchart())
 #st.markdown("## Median Household income (2019-2021) against population density")
 #st.altair_chart(createpopagainstincome())
 #st.markdown("# UK data")
