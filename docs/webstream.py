@@ -1,4 +1,5 @@
 import requests
+import statsmodels.api as sm
 import pandas as pd
 import streamlit as st
 import altair as alt
@@ -61,7 +62,24 @@ def createbidenpollchart():
         width=600,
         height=400
     )
-    return chart_points
+    events_data = pd.read_sql_table("Biden Events",con=engine)
+    vertical_lines = alt.Chart(events_data).mark_rule(color='blue', strokeWidth=1.5,opacity=0.5).encode(
+    x='Date:T',
+    tooltip=['Event:N'],
+    )
+    loess_smoothed = df_long.groupby(['Opinion', 'startDate']).mean().reset_index()
+    loess_smoothed['smoothed'] = loess_smoothed.groupby('Opinion')['Percentage'].transform(lambda x: sm.nonparametric.lowess(x, range(len(x)), frac=0.3)[:, 1])
+
+    # Altair Chart for smoothed lines
+    chart_lines = alt.Chart(loess_smoothed).mark_line(color='black').encode(
+        x=alt.X('startDate:T', axis=alt.Axis(tickCount='month', format='%b %Y', labelAngle=-90), title='Date'),
+        y=alt.Y('smoothed:Q', axis=alt.Axis(title='Percentage')),
+        detail='Opinion:N'
+    )
+    combined_chart = alt.layer(chart_points, chart_lines, vertical_lines).interactive()
+
+
+    return combined_chart
 
 def plot_interactive(col_x,col_y):
     with engine.connect() as conn:
@@ -72,8 +90,8 @@ def plot_interactive(col_x,col_y):
         y=col_y,
         tooltip=['Year', col_x, col_y]
     )
-
-    return chart
+    regressionline = chart.transform_regression(col_x, col_y).mark_line()
+    return (chart+regressionline)
 
 
 st.title('Political Data Science project')
