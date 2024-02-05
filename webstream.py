@@ -92,6 +92,7 @@ def plot_interactive(col_x,col_y):
     )
     regressionline = chart.transform_regression(col_x, col_y).mark_line()
     return (chart+regressionline)
+
 def createpopagainstincome():
     merged_population_income = pd.read_sql("State Data",con=engine)
     merged_population_income['Income_Integer'] = merged_population_income['Median Household income'].replace('[\$,]', '', regex=True).astype(int)
@@ -104,6 +105,24 @@ def createpopagainstincome():
     regressionline = scatter.transform_regression('Income_Integer', 'Population/SqMi').mark_line()
     combined_chart = (scatter + regressionline)
     return combined_chart.interactive()
+def createcrimeratesbetweenUKcities():
+    crimeratesdf = pd.read_sql("UK crime rates",con=engine)
+    Crimegraph = alt.Chart(crimeratesdf).mark_line().encode(
+    x=alt.X('Month:O', title='Month'),  
+    color=alt.Color('city:N', title='City'), 
+    y=alt.Y('crime_rate:Q', title='Crime Rates'),
+    tooltip=['Month:O', 'city:N', 'crime_rate:Q'] 
+    ).properties(
+        width=500, 
+        height=300,
+        title='Crime Rates in Cities (2021)'
+    ).transform_fold(  
+        fold=['London', 'Manchester', 'Newcastle', 'Portsmouth' ],
+        as_=['city', 'crime_rate']
+    )
+    return Crimegraph
+
+
 
 st.title('Political Data Science project')
 st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
@@ -132,9 +151,9 @@ st.altair_chart(plot_interactive(var_x,var_y))
 
 st.markdown("## Median Household income (2019-2021) against population density")
 st.altair_chart(createpopagainstincome())
-#st.markdown("# UK data")
-#st.markdown("## Crime rates over 2021 between UK cities")
-#st.altair_chart(createcrimeratesbetweenUKcities())
+st.markdown("# UK data")
+st.markdown("## Crime rates over 2021 between UK cities")
+st.altair_chart(createcrimeratesbetweenUKcities())
 #st.markdown("## Crime by category, London 2022")
 #st.altair_chart(createlondoncrimebycategory())
 
