@@ -122,6 +122,16 @@ def createcrimeratesbetweenUKcities():
     )
     return Crimegraph
 
+def createlondoncrimebycategory():
+    crimecategorylondon2022 = pd.read_sql("London crime categories",con=engine)
+    chart = alt.Chart(crimecategorylondon2022).mark_bar().encode(
+    x='count:Q',
+    y=alt.Y('category:N', sort='-x'),
+    tooltip=['category:N', 'count:Q'] 
+    ).properties(
+    title='Crime by Category in London 2021'  # Add a title to the chart
+    )
+    return chart
 
 
 st.title('Political Data Science project')
@@ -142,8 +152,8 @@ with col2:
 st.altair_chart(createbidenpollchart())
 
 st.markdown("# Interactive Graph")
-var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate'])
-var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate'])
+var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
+var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
 st.altair_chart(plot_interactive(var_x,var_y))
 
 
@@ -154,11 +164,9 @@ st.altair_chart(createpopagainstincome())
 st.markdown("# UK data")
 st.markdown("## Crime rates over 2021 between UK cities")
 st.altair_chart(createcrimeratesbetweenUKcities())
-#st.markdown("## Crime by category, London 2022")
-#st.altair_chart(createlondoncrimebycategory())
+st.markdown("## Crime by category, London 2022")
+st.altair_chart(createlondoncrimebycategory())
 
 
 
 
-#st.altair_chart(createpopulationgeo())
-#st.altair_chart(createpopulationdensitygeo())
