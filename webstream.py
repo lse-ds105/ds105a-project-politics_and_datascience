@@ -5,7 +5,7 @@ import streamlit as st
 import altair as alt
 from vega_datasets import data
 from sqlalchemy import create_engine
-engine = create_engine('sqlite:///Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
+engine = create_engine('sqlite:///Docs/Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
 
 def createpopulationgeo():
     
@@ -92,7 +92,18 @@ def plot_interactive(col_x,col_y):
     )
     regressionline = chart.transform_regression(col_x, col_y).mark_line()
     return (chart+regressionline)
-
+def createpopagainstincome():
+    merged_population_income = pd.read_sql("State Data",con=engine)
+    merged_population_income['Income_Integer'] = merged_population_income['Median Household income'].replace('[\$,]', '', regex=True).astype(int)
+    merged_population_income['Population/SqMi'] = pd.to_numeric(merged_population_income['Population/SqMi'], errors='coerce')
+    scatter = alt.Chart(merged_population_income).mark_circle().encode(
+    y= alt.Y('Income_Integer',title="Median Household Income"),
+    x='Population/SqMi',
+    tooltip=['State:N', 'Income_Integer:Q', 'Population/SqMi:Q']
+    )
+    regressionline = scatter.transform_regression('Income_Integer', 'Population/SqMi').mark_line()
+    combined_chart = (scatter + regressionline)
+    return combined_chart.interactive()
 
 st.title('Political Data Science project')
 st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
@@ -119,8 +130,8 @@ st.altair_chart(plot_interactive(var_x,var_y))
 
 
 
-#st.markdown("## Median Household income (2019-2021) against population density")
-#st.altair_chart(createpopagainstincome())
+st.markdown("## Median Household income (2019-2021) against population density")
+st.altair_chart(createpopagainstincome())
 #st.markdown("# UK data")
 #st.markdown("## Crime rates over 2021 between UK cities")
 #st.altair_chart(createcrimeratesbetweenUKcities())
