@@ -22,8 +22,8 @@ def createpopulationgeo():
     ).project(
         type='albersUsa'
     ).properties(
-        width=500,
-        height=300,
+        width=375,
+        height=225,
         title='Population by State'
     )
     return chart
@@ -42,8 +42,8 @@ def createpopulationdensitygeo():
     ).project(
         type='albersUsa'
     ).properties(
-        width=500,
-        height=300,
+        width=365,
+        height=225,
         title='Population Density by State'
     )
     return chart
