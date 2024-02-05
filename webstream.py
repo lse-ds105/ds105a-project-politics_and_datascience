@@ -133,6 +133,40 @@ def createlondoncrimebycategory():
     )
     return chart
 
+def create_pie_chart(year,df):
+    # creating data frame for single year
+    
+    data_year = df.reset_index()[['Region', year]].rename(columns={year: 'Population'})
+    chart = alt.Chart(data_year).mark_arc().encode(
+        theta=alt.Theta(field="Population", type="quantitative"),
+        color=alt.Color(field="Region", type="nominal"),
+        tooltip=['Region', 'Population']
+    ).properties(
+        title=f"Population Distribution in {year}",
+        width=200,
+        height=200
+    )
+    return chart
+
+def create_pop_charts():
+    region_pop_df = pd.read_sql("Global population",con=engine)
+    chart_2050 = create_pie_chart('2050',region_pop_df)
+    chart_2075 = create_pie_chart('2075',region_pop_df)
+    chart_2100 = create_pie_chart('2100',region_pop_df)
+    return chart_2050 | chart_2075 | chart_2100
+
+
+def create_gloabl_gini_average():
+    gini_df = pd.read_sql("Global gini",con=engine)
+    scatter = alt.Chart(gini_df).mark_circle().encode(
+    y= alt.Y('GlobalGini',title = "Average Global Gini"),
+    x='Year',
+    )
+    regression = scatter.transform_regression('Year', 'GlobalGini').mark_line()
+    combined_chart =regression+scatter
+    return combined_chart
+
+
 
 st.title('Political Data Science project')
 st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
@@ -140,6 +174,10 @@ st.markdown("* Ayşe Yalçın (ayseyalcin1) | BSc in Politics and Data Science")
 st.markdown("* Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science")
 st.write("This project aims to create easy to interpret, interactive graphs showing interesting correlations we found from various government census data and APIs")
 st.write("It is important to note that any correlations shown do not implicitly imply that a causation exists between the two variables!")
+st.markdown("# Interactive Graph")
+var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
+var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
+st.altair_chart(plot_interactive(var_x,var_y))
 st.markdown("# US data")
 st.markdown("## Population vs Population Density by State")
 col1, col2 = st.columns(2)
@@ -151,14 +189,6 @@ with col2:
 
 st.altair_chart(createbidenpollchart())
 
-st.markdown("# Interactive Graph")
-var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
-var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
-st.altair_chart(plot_interactive(var_x,var_y))
-
-
-
-
 st.markdown("## Median Household income (2019-2021) against population density")
 st.altair_chart(createpopagainstincome())
 st.markdown("# UK data")
@@ -166,7 +196,11 @@ st.markdown("## Crime rates over 2021 between UK cities")
 st.altair_chart(createcrimeratesbetweenUKcities())
 st.markdown("## Crime by category, London 2022")
 st.altair_chart(createlondoncrimebycategory())
-
+st.markdown("# Global data")
+st.markdown("## Population distribution over time")
+st.altair_chart(create_pop_charts())
+st.markdown("## Average global Gini coefficient over time")
+st.altair_chart(create_gloabl_gini_average())
 
 
 
