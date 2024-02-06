@@ -74,7 +74,7 @@ Findings = It can be seen that the highest population is in California, yet the 
 
 Consider = It is important to also consider that when viewing population density, that land area was only used, therefore inhabitable regions, if there is a lake or body of water in a state, affects the population density if one considers total area/population. The findings may also be affected by the state being a coastal, and therefore more desired region to live in, or a landlocked state. Reasons to move to the state, such as urbanisation, safety, healthcare conditions, and employment opportunities must also be considered when analysing reasons why that region has a higher population.
 
-Source = https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area 
+Sources = https://api.census.gov ,https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area 
 
 ### Average global gini over the years graph:
 

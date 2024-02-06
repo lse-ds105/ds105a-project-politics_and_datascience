@@ -210,14 +210,19 @@ def show_home():
     st.markdown("* Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science")
     st.write("This project aims to create easy to interpret, interactive graphs showing interesting correlations we found from various government census data and APIs")
     st.write("It is important to note that any correlations shown do not implicitly imply that a causation exists between the two variables!")
+
 def show_interactive():
     st.markdown("# Interactive Graph")
     # Taking user input via drop down box
     var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
     var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
     st.altair_chart(plot_interactive(var_x,var_y))
+    st.markdown("This graph acts as a tool and compares different X and Y variables that are interchangeable according to the desired comparison that needs to be made. Every single point in the graph represents a year, and therefore all variables that are compared are compared by yearly data.")
+    st.markdown("The data in the X and Y variables may not be correlational data, and can be adhered to what the user would like to find and compare, yet, finding a correlation is possible with the data given, as they provide sufficient comparable aspects. There are confounding variables in each correlation, and therefore they must be considered if they are being said to have a correlation. The line of best fit is present when X and/or Y variables are changed, so a positive or negative relationship can be analysed.")
+
 def show_us():
     st.markdown("# US data")
+    
     st.markdown("## Population vs Population Density by State")
     # Here two altair charts are organised to be side by side for easier comparison
     col1, col2 = st.columns(2)
@@ -226,33 +231,81 @@ def show_us():
 
     with col2:
         st.altair_chart(createpopulationdensitygeo())
-
+    st.markdown("Sources = https://api.census.gov ,https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area")
+    st.markdown("This graph summarises the population density for each state in the USA, and the population distribution between each state in the USA, to compare how each changes. The data is shown in the map which, as you hover over the state, the population and population density can be seen.")
+    st.markdown("It can be seen that the highest population is in California, yet the highest population density is in New Jersey, and therefore the change can be seen that the land area affects how population density differs.")
+    st.markdown("It is important to also consider that when viewing population density, that land area was only used, therefore inhabitable regions, if there is a lake or body of water in a state, affects the population density if one considers total area/population. The findings may also be affected by the state being a coastal, and therefore more desired region to live in, or a landlocked state. Reasons to move to the state, such as urbanisation, safety, healthcare conditions, and employment opportunities must also be considered when analysing reasons why that region has a higher population.")
+    
+    st.markdown("## Biden Aproval over time")
     st.altair_chart(createbidenpollchart())
-
+    st.markdown("Source = https://projects.fivethirtyeight.com/biden-approval-rating/")
+    st.markdown("This graph compares bidens approval ratings throughout his presidency with key events in american politics")
+    st.markdown("Biden's approval peaked when he first took office on January 20th 2021, and have slowly decreased since then.The failure to adequately respond to HurricaneIda and Biden's meeting with Putin at the Geneva summit, seem to coincide with a clear increase of disapproval rates.")
+    st.markdown(" It is important to assert caution here and not blindly reduce the change of approval ratings to these events, there are other variables that may also contribute to a change in approval ratings: increasing polarisation, protests, media coverage and scandals.")
     st.markdown("## Median Household income (2019-2021) against population density")
     st.altair_chart(createpopagainstincome())
+    
     st.markdown("## GDP pre capita over time")
     st.altair_chart(plot_line_graph('USA GDP Per Capita (US $)'))
+    st.markdown("Source = https://www.macrotrends.net/countries/USA/united-states/gdp-per-capita")
+    st.markdown("This graph shows the GDP per capita value over the years in the United States, meaning average GDP per person, in the United States for each year.")
+    st.markdown("There are no visible major fluctuations, but a general increase in the GDP per capita. This shows that an increasing investment in technology and employment opportunities paved way to the better wellbeing of US citizens over the years.")
+    st.markdown("The graph shows a decrease in the year 2008, which can show the effects of the 2008 stock market crash, and the effects of it on the USA. Though, a general increase can show that there are also different confounding variables, which should be considered.")
+    
     st.markdown("## Growth (GDP) over time")
     st.altair_chart(plot_line_graph('US GDP Growth Rate'))
+    st.markdown("Source = https://www.macrotrends.net/countries/USA/united-states/gdp-per-capita")
+    st.markdown("This graph shows the GDP rate over the years in the United States, where GDP accounts for the monetary value of all finished goods in the country.")
+    st.markdown("The fluctuations in the graph show that though there are changes in overall GDP, they are not usually consistent over the years. The largest contributor to GDP in the USA, which is service-based industries, is generally a large output generator, in comparison to the manufacturing or agricultural industry, it can be seen that the professional and business sector is fluctuating, and there is a small general decrease in value.")
+    st.markdown("When analysing the graph, the 2008 stock market crash and COVID must be considered alongside other variables in order to see the effects of global issues on US GDP.")
 
 def show_uk():
     st.markdown("# UK data")
+    
     st.markdown("## Crime rates over 2021 between UK cities")
     st.altair_chart(createcrimeratesbetweenUKcities())
+    st.markdown("Source = https://data.police.uk/docs/method/crime-street/")
+    st.markdown("This line graph compares the crime rates across 4 UK cities, using the surrounding area of their largest train stations, aiming to investigate the effect of covid lockdowns on crime rates.")
+    st.markdown("There is a clear increase of crime as covid restrictions gradually began to lift at the beginning of the year, and a peak around June, when Boris Johnson announced the easing of restrictions. This supports the hypothesis that crime rates are correlated to intensity of restrictions.")
+    st.markdown("London train station is much more expensive than the other cities and the surrounding area is naturally much busier due to its high population, thus it is logical that London would have the highest crime rates, as supported by this data. However, it is important for one to note the anomaly of Manchester - this raises important questions about the variation of data collection accuracy in cities, and the problems this causes in conducting cross city comparisons. One must be weary of this when drawing conclusions from the above findings.")
+    
     st.markdown("## Crime by category, London 2022")
     st.altair_chart(createlondoncrimebycategory())
+    st.markdown("Source = https://data.police.uk/docs/method/crime-street/")
+    st.markdown("This bar chart shows the number of types of crime around kings cross, London, in 2021.")
+    st.markdown("There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of weapon with XXX.")
+    st.markdown("Why is there such a stark difference? Consider that the area of kings cross is surrounded by various drinking locations, which may explain the high proportion of antisocial behaviours.")
+    
     st.markdown("## Gdp pre capita ($) over time")
     st.altair_chart(plot_line_graph("UK GDP Per Capita (US $)"))
+    st.markdown("Source = https://www.macrotrends.net/countries/GBR/united-kingdom/gdp-per-capita")
+    st.markdown("This graph depicts the average GDP per capita, meaning average GDP per person, in the United Kingdom for each year.")
+    st.markdown("The graph shows a general increase in the GDP per capita in the UK, which can be constituted to the technological and industrial advancements, creating both more job opportunities, and generating a higher level of income.")
+    st.markdown("The graph shows a severe decrease in the year 2008, which can show the effects of the 2008 stock market crash, and the effects of it on the UK. Though, a general increase can show that there are also different confounding variables, which should be considered.")
+    
     st.markdown("## UK growth (GDP $) over time")
     st.altair_chart(plot_line_graph('UK GDP Growth Rate'))
+    st.markdown("Source = https://www.macrotrends.net/countries/GBR/united-kingdom/gdp-gross-domestic-product")
+    st.markdown("This graph shows the GDP rate over the years in the United Kingdom, where GDP accounts for the monetary value of all finished goods in the country.")
+    st.markdown("There is a visible amount of fluctuations in the graph, which neither shows a general increase or decrease. The largest contributor to GDP in the UK, which is manufacturing, is generally a large output generator, yet the fluctuations show that there are other variables affecting country GDP.")
+    st.markdown("When analysing the graph, the 2008 stock market crash and COVID must be considered alongside other variables in order to see the effects of global issues on UK GDP.")
 
 def show_global():     
     st.markdown("# Global data")
-    st.markdown("## Population distribution over time")
+    
+    st.markdown("## Future population distribution estimates")
     st.altair_chart(create_pop_charts())
+    st.markdown("Source = https://www.ined.fr/en/everything_about_population/data/world-projections/projections-by-countries/")
+    st.markdown("These graphs show the distribution of the global population, depicted in the areas that are colour coded accordingly, and the expected increase of the population from years 2050 to 2100.")
+    st.markdown("The high population in Central and Southern Asia is understandable with the Chinese population density and South Asian population, as it remains the highest populated region throughout years. One of the least populated, being Western Europe, can be correlated to the low death rates and low birth rates, compared to the high birth rates in the African region, where it can be seen that the population increases over time.")
+    st.markdown("It is also important to consider the measures taken by countries to lower population increase, like the one-child policy in China, therefore affecting the increase of the region’s population over time. Also, better healthcare conditions must also be considered alongside other confounding variables, as better healthcare and welfare implies a longer lifetime and in turn a probability of a larger population in some regions, including Africa.")
+    
     st.markdown("## Average global Gini coefficient over time")
     st.altair_chart(create_gloabl_gini_average())
+    st.markdown("Source = http://data.un.org/Data.aspx?q=gini&d=WDI&f=Indicator_Code%3ASI.POV.GINI")
+    st.markdown("This graph depicts the average global gini index rate over the years, where the gini index shows economic inequality, the higher the gini, the higher the economic inequality.")
+    st.markdown("There is a general increase in the trend of the global gini index, which can be constituted to the wages and jobs of lower-skilled workers in tradable sectors, especially in developed economies.")
+    st.markdown("It is important to consider that as the average global gini is seen to be fluctuating, it can be seen that though some countries are moving towards an equal industrialised economic system, some countries still remain economically less developed, with more inequality, not allowing for a steady increase or decrease in the average global index.")
 
 
 # These conditional statements call the corresponding functions whenever a new page is selected
