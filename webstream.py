@@ -1,5 +1,4 @@
 # Importing libraries
-
 import statsmodels.api as sm
 import pandas as pd
 import streamlit as st
@@ -8,14 +7,16 @@ from vega_datasets import data
 from sqlalchemy import create_engine
 
 # Creating engine used to access our database
-engine = create_engine('sqlite:///Docs/Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
+engine = create_engine('sqlite:///Docs/Data/PoliticsandDataSci.db', 
+                       echo=False, 
+                       isolation_level="AUTOCOMMIT")
+# Opening connection to database
+with engine.connect() as conn:
+        pass
+
 
 # Generic method for plotting line graph from data in interactive table
 def plot_line_graph(y_column):
-    
-    # Opening connection to database
-    with engine.connect() as conn:
-        pass
     # reading sql table to dataframe
     dataframe = pd.read_sql_table("Interactive Data",con=engine)
     custom_domain = [year for year in range(1960, 2025)]
@@ -31,11 +32,7 @@ def plot_line_graph(y_column):
     ).interactive()
     return chart
 
-
 def createpopulationgeo():
-    # opening connection to database
-    with engine.connect() as conn:
-        pass
     # reading table to dataframe
     us_population_df = pd.read_sql_table("State Data",con=engine)
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
@@ -55,9 +52,6 @@ def createpopulationgeo():
     return chart
 
 def createpopulationdensitygeo():
-    # opening connection to database
-    with engine.connect() as conn:
-        pass
     # reading table to dataframe
     us_population_df = pd.read_sql_table("State Data",con=engine)
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
@@ -77,9 +71,6 @@ def createpopulationdensitygeo():
     return chart
 
 def createbidenpollchart():
-    # opening connection to database
-    with engine.connect() as conn:
-        pass
     # reading biden polls table to dataframe
     Biden_dataframe = pd.read_sql_table("Biden polls",con=engine)
     df_long= pd.melt(Biden_dataframe, id_vars=['startDate'], value_vars=['approve', 'disapprove'],
@@ -99,7 +90,7 @@ def createbidenpollchart():
     x='Date:T',
     tooltip=['Event:N'],
     )
-    # creating smooth lines for graph
+    # smoothing and aggregating data
     loess_smoothed = df_long.groupby(['Opinion', 'startDate']).mean().reset_index()
     loess_smoothed['smoothed'] = loess_smoothed.groupby('Opinion')['Percentage'].transform(lambda x: sm.nonparametric.lowess(x, range(len(x)), frac=0.3)[:, 1])
 
@@ -115,8 +106,6 @@ def createbidenpollchart():
 
 # generic method to plot regression graph from user input
 def plot_interactive(col_x,col_y):
-    with engine.connect() as conn:
-        pass
     df = pd.read_sql_table("Interactive Data",con=engine)
     chart = alt.Chart(df).mark_circle().encode(
         x=col_x,
@@ -173,7 +162,6 @@ def createlondoncrimebycategory():
 
 def create_pie_chart(year,df):
     # creating data frame for single year
-    
     data_year = df.reset_index()[['Region', year]].rename(columns={year: 'Population'})
     chart = alt.Chart(data_year).mark_arc().encode(
         theta=alt.Theta(field="Population", type="quantitative"),
@@ -189,6 +177,7 @@ def create_pie_chart(year,df):
 
 # this method calls the create_pie_chart() method three times to return 3 pie charts for each year, showing the change over time
 def create_pop_charts():
+    # reading sql table to dataframe
     region_pop_df = pd.read_sql("Global population",con=engine)
     chart_2050 = create_pie_chart('2050',region_pop_df)
     chart_2075 = create_pie_chart('2075',region_pop_df)
@@ -208,8 +197,12 @@ def create_gloabl_gini_average():
     combined_chart =regression+scatter
     return combined_chart
 
-#### comments up to here
+## Website creation
 
+# This line of code allows user to navigate between different pages on the website
+page = st.sidebar.radio("Go to", ['Home', 'Interactive Graph', 'US Data', 'UK Data', 'Global Data'])
+
+# The following are functions for displaying each page
 def show_home():
     st.title('Political Data Science project')
     st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
@@ -219,12 +212,14 @@ def show_home():
     st.write("It is important to note that any correlations shown do not implicitly imply that a causation exists between the two variables!")
 def show_interactive():
     st.markdown("# Interactive Graph")
+    # Taking user input via drop down box
     var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
     var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
     st.altair_chart(plot_interactive(var_x,var_y))
 def show_us():
     st.markdown("# US data")
     st.markdown("## Population vs Population Density by State")
+    # Here two altair charts are organised to be side by side for easier comparison
     col1, col2 = st.columns(2)
     with col1:
         st.altair_chart(createpopulationgeo())
@@ -251,6 +246,7 @@ def show_uk():
     st.altair_chart(plot_line_graph("UK GDP Per Capita (US $)"))
     st.markdown("## UK growth (GDP $) over time")
     st.altair_chart(plot_line_graph('UK GDP Growth Rate'))
+
 def show_global():     
     st.markdown("# Global data")
     st.markdown("## Population distribution over time")
@@ -258,8 +254,8 @@ def show_global():
     st.markdown("## Average global Gini coefficient over time")
     st.altair_chart(create_gloabl_gini_average())
 
-page = st.sidebar.radio("Go to", ['Home', 'Interactive Graph', 'US Data', 'UK Data', 'Global Data'])
 
+# These conditional statements call the corresponding functions whenever a new page is selected
 if page == 'Home':
     show_home()
 elif page == 'Interactive Graph':
