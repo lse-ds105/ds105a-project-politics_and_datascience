@@ -155,4 +155,4 @@ In this step we added comments to all notebooks where needed, to further elabora
 ## Explanation of the process for each notebook:
 The process for each notebook and the code written will not be present in this README file as we made comments and explanations for each step of our notebook, yet, we wanted to make some notes on what we did, generally, within the notebooks to create the desired output.
 
-Other than that, we separated the commands in a different code text box, at the start of all notebooks to not have them in between the code later on, and have more organised notebooks.
+At the start of each notebook there is a brief description of the purpose of the notebook.
