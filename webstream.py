@@ -273,7 +273,7 @@ def show_uk():
     st.altair_chart(createlondoncrimebycategory())
     st.markdown("Source = https://data.police.uk/docs/method/crime-street/")
     st.markdown("This bar chart shows the number of types of crime around kings cross, London, in 2021.")
-    st.markdown("There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of weapon with XXX.")
+    st.markdown("There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of weapon with 109.")
     st.markdown("Why is there such a stark difference? Consider that the area of kings cross is surrounded by various drinking locations, which may explain the high proportion of antisocial behaviours.")
     
     st.markdown("## Gdp pre capita ($) over time")
