@@ -5,9 +5,9 @@
 * Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science
 
 ## Why we chose our project topic 👀:
-As Politics and Data Science students at LSE, we struggle with the abundance of data on the internet, but that data being complex, not customisable to fit our needs, and in general, too difficult to find. Therefore, we sought out a website to find easily sourced data, that can also be customised to create interactive correlation graphs with simple descriptions underneath the graphs themselves in the USA/UK/Global data portion of the website. 
+As Politics and Data Science students at LSE, we struggle the politics related data being stored in ways which are hard to interpret such as regression tables or excel files, which makes finding data for essays a very tedious process. Therefore, we sought out a website that is a source of easy to interpret data, that can also be customised to create interactive correlation graphs with simple descriptions underneath the graphs themselves in the USA/UK/Global data portion of the website. 
 
-We find it difficult to summarize graphs, with no prior education in the manner, and so the descriptions aim to help politics students, like us make better anaylses for data summarisation. The data collected is political data in ehich we most frequently use, and we narrowed our focus to the USA, the UK, and global data to find more in depth sources to make graphs with interchangable variables. 
+The descriptions help politics students, with no formal quatative skills, to make better anaylses for data summarisation. The data collected is political data focused on the USA, the UK, and global data to find more in depth sources to make graphs with interchangable variables. 
 
 ## How we gathered our data and challenges we faced:
 We utilised the following methods to gather data throughout the project:
