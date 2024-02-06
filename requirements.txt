@@ -1,0 +1,9 @@
+altair==5.1
+pandas
+vega_datasets
+altair_viewer
+streamlit
+ipython-sql
+requests
+sqlalchemy
+statsmodels
