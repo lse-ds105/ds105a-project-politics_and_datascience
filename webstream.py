@@ -1,15 +1,22 @@
+# Importing libraries
+
 import statsmodels.api as sm
 import pandas as pd
 import streamlit as st
 import altair as alt
 from vega_datasets import data
 from sqlalchemy import create_engine
+
+# Creating engine used to access our database
 engine = create_engine('sqlite:///Docs/Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
+
+# Generic method for plotting line graph from data in interactive table
 def plot_line_graph(y_column):
-    # Generic method for plotting line graph from data in interactive table
-    # Create Altair chart
+    
+    # Opening connection to database
     with engine.connect() as conn:
         pass
+    # reading sql table to dataframe
     dataframe = pd.read_sql_table("Interactive Data",con=engine)
     custom_domain = [year for year in range(1960, 2025)]
     chart = alt.Chart(dataframe).mark_line(
@@ -22,13 +29,14 @@ def plot_line_graph(y_column):
         title=f'{y_column} Over Years',
         width = 500
     ).interactive()
-
-    # Display the chart
     return chart
+
+
 def createpopulationgeo():
-    
+    # opening connection to database
     with engine.connect() as conn:
         pass
+    # reading table to dataframe
     us_population_df = pd.read_sql_table("State Data",con=engine)
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
     chart = alt.Chart(states_geo).mark_geoshape().encode(
@@ -47,8 +55,10 @@ def createpopulationgeo():
     return chart
 
 def createpopulationdensitygeo():
+    # opening connection to database
     with engine.connect() as conn:
         pass
+    # reading table to dataframe
     us_population_df = pd.read_sql_table("State Data",con=engine)
     states_geo = alt.topo_feature(data.us_10m.url, 'states')
     chart = alt.Chart(states_geo).mark_geoshape().encode(
@@ -65,9 +75,12 @@ def createpopulationdensitygeo():
         title='Population Density by State'
     )
     return chart
+
 def createbidenpollchart():
+    # opening connection to database
     with engine.connect() as conn:
         pass
+    # reading biden polls table to dataframe
     Biden_dataframe = pd.read_sql_table("Biden polls",con=engine)
     df_long= pd.melt(Biden_dataframe, id_vars=['startDate'], value_vars=['approve', 'disapprove'],
                   var_name='Opinion', value_name='Percentage')
@@ -80,11 +93,13 @@ def createbidenpollchart():
         width=600,
         height=400
     )
+    # reading events table to dataframe
     events_data = pd.read_sql_table("Biden Events",con=engine)
     vertical_lines = alt.Chart(events_data).mark_rule(color='blue', strokeWidth=1.5,opacity=0.5).encode(
     x='Date:T',
     tooltip=['Event:N'],
     )
+    # creating smooth lines for graph
     loess_smoothed = df_long.groupby(['Opinion', 'startDate']).mean().reset_index()
     loess_smoothed['smoothed'] = loess_smoothed.groupby('Opinion')['Percentage'].transform(lambda x: sm.nonparametric.lowess(x, range(len(x)), frac=0.3)[:, 1])
 
@@ -94,11 +109,11 @@ def createbidenpollchart():
         y=alt.Y('smoothed:Q', axis=alt.Axis(title='Percentage')),
         detail='Opinion:N'
     )
+    # combining event, point and line graphs together
     combined_chart = alt.layer(chart_points, chart_lines, vertical_lines).interactive()
-
-
     return combined_chart
 
+# generic method to plot regression graph from user input
 def plot_interactive(col_x,col_y):
     with engine.connect() as conn:
         pass
@@ -108,10 +123,12 @@ def plot_interactive(col_x,col_y):
         y=col_y,
         tooltip=['Year', col_x, col_y]
     )
+    # combining scatter graph with regression line
     regressionline = chart.transform_regression(col_x, col_y).mark_line()
     return (chart+regressionline)
 
 def createpopagainstincome():
+    # reading table to dataframe
     merged_population_income = pd.read_sql("State Data",con=engine)
     merged_population_income['Income_Integer'] = merged_population_income['Median Household income'].replace('[\$,]', '', regex=True).astype(int)
     merged_population_income['Population/SqMi'] = pd.to_numeric(merged_population_income['Population/SqMi'], errors='coerce')
@@ -121,9 +138,12 @@ def createpopagainstincome():
     tooltip=['State:N', 'Income_Integer:Q', 'Population/SqMi:Q']
     )
     regressionline = scatter.transform_regression('Income_Integer', 'Population/SqMi').mark_line()
+    # combining scatter graph with regression line
     combined_chart = (scatter + regressionline)
     return combined_chart.interactive()
+
 def createcrimeratesbetweenUKcities():
+    # reading table to dataframe
     crimeratesdf = pd.read_sql("UK crime rates",con=engine)
     Crimegraph = alt.Chart(crimeratesdf).mark_line().encode(
     x=alt.X('Month:O', title='Month'),  
@@ -164,8 +184,10 @@ def create_pie_chart(year,df):
         width=200,
         height=200
     )
+    # returns only the chart for a single year
     return chart
 
+# this method calls the create_pie_chart() method three times to return 3 pie charts for each year, showing the change over time
 def create_pop_charts():
     region_pop_df = pd.read_sql("Global population",con=engine)
     chart_2050 = create_pie_chart('2050',region_pop_df)
@@ -175,18 +197,18 @@ def create_pop_charts():
 
 
 def create_gloabl_gini_average():
+    # reading sql table to dataframe
     gini_df = pd.read_sql("Global gini",con=engine)
     scatter = alt.Chart(gini_df).mark_circle().encode(
     y= alt.Y('GlobalGini',title = "Average Global Gini"),
     x='Year',
     )
     regression = scatter.transform_regression('Year', 'GlobalGini').mark_line()
+    # combining scatter and regression graphs
     combined_chart =regression+scatter
     return combined_chart
 
-
-
-
+#### comments up to here
 
 def show_home():
     st.title('Political Data Science project')
