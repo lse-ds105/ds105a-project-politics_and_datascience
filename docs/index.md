@@ -13,20 +13,20 @@ The descriptions help politics students, with no formal quatative skills, to mak
 We utilised the following methods to gather data throughout the project:
 
 ### Method 1: Web Scraping 💻
-We gathered the majority of our data from different sources through web scraping. There were an abundance of tables and undesired data in each link, so we started by choosing the table we wanted to scrape, and did so by using different commands such as pandas and scrapy. We utilised credible sources such as census.gov and governmental data, but we also used other sources where we found that the data was easier to scrape, and variables that were not changed according to the credibility of the source, such as land area. Some issues we had with web scraping were the fact that it was difficult finding scrapable data for the graphs we wanted to produce, and therefore could not collect as much data as we wanted to via this method.
+We gathered the majority of our data from different sources through web scraping credible websites such as census.gov and offical government pages such as ASPE. One problem we faced was, WIKI LINK PROBLEM.
+
+
 
 ### Method 2: APIs 💡
-We also utilised APIs to find sources, such as crime rates in the UK, and put the data through Postman because of the extensive amount of variables we gathered. The issue with APIs were that most of them were not able to be accessed, and/or required a payment to be accessed. We therefore opted to utilise web scraping more, and to experiment with hidden APIs. Another issue was that the APIs usually directed us to Excel files, where we could not gather the data that was stored there. Though we tried text mining, the nature of the task required previous practice, where we were challenged. 
+We also utilised APIs to find data, such as crime rates in the UK. Postman was particularly useful to explore the APIs and figure out the required parameters for the data we wanted. The crime rates API was extremely useful- as it allowed you to change the paramters of date and longnitude/latitude, which was useful for comparing cities. The issue with APIs was that many relevent ones we found were very expensive, thus websraping was very useful. Another issue was that the APIs usually directed us to Excel files or PDFs which contained qualitatative data and were were unable to turn this into usable quatative data.
 
 ### Method 3: Hidden APIs 📁
-We experimented with hidden APIs, in fact gathered some data utilising them, but we did have some difficulty at first. The website we used for hidden API collection was Fivethirtyeight and we were able to get the links of the json files to put them through Postman. Though the process was challenging, we were able to gather the data in that manner. 
+The website we used for hidden API collection was Fivethirtyeight and we were able to get the links of the json files through inspecting the page and going to the network tab, and then exploring the cURL using Postman. Though the process was challenging, we were able to gather the data in this manner. 
 
 ## What is the data and how does it look like in general 🔗:
-The data was generally, as stated before, in the form of tables or graphs in which we scraped and collected with the aforementioned 3 methods. After we wrote our notebooks and scraped the data, the dataframes looked like tables, and most of them were separated by year, so that out interactive tables could be adjusted, where users could change the variables to 'year', which we added to a single database. 
+The data was generally, as stated before, in the form of tables or graphs in which we scraped and collected with the aforementioned 3 methods. After scraping the data, we figured out what was useful and then cleaned it and saved relevent data to a csv. Lots of data sources had N/A columns or returned irrelevent data, such as crime ID. For example, the crime API returned 26,000 rows of data, which we cleaned and use value counts to reduce down, before saving it to a CSV.
 
-Later on, making altair graphs was a bit more complex as some of the data were producing different outputs. For example, the global population predictor data was made into pie charts as a line graph would have been a bit more complex to understand. Therefore, we decided to see the population growth by region. 
-
-The explanations for the graphs we wrote, that are visible on the website follow the pattern: 1 sentence for summary, 1 sentence for findings, 2 sentence on things that need to be considered. 
+We then used vega-altaire to create interactive data visualisations, using the appropriate graph type for the data. The graphs on the website are accomapained with a short explanation of what the graph suggests and the findings. 
 
 ## What we found out about the data 🔍:
 Note: The following findings are also visible on the website under each graph. 
@@ -141,7 +141,7 @@ To merge the data, we followed a method where we collected notebooks in a single
 These are the steps/process we followed as we organised our GitHub.
 
 ### Step 1: The creation of notebooks 📌
-The first step was more so a research step, and we scraped as much data as possible, also using all sorts of APIs. This was a trial and error step, where we decided which graphs worked best for us and what type of APIs we could use for the process. We also experimented with hidden APIs, giving us a broader range of resources and data. The notebooks were titled Nb01.ipynb, Nb02.ipynb respectively for all graphs.
+The first step was a research step, and we scraped as much data as possible, also using all sorts of APIs. This was a trial and error step, where we decided which graphs worked best for us and what type of APIs we could use for the process. We also experimented with hidden APIs, giving us a broader range of resources and data. 
 
 ### Step 2: Organizing data 📌
 The next step we created a data folder where we added all CSV files to it, so they could be uploaded to the website to create the interactive graphs. 
@@ -150,9 +150,9 @@ The next step we created a data folder where we added all CSV files to it, so th
 We found that titling the notebooks the way we did in step 1 made it difficult to understand which notebook had which data, so we added markdown titles at the top of each notebook, so it is understandable when clicked on it. We also added short descriptions of the data summarized and hypotheses to some, so that we had a description that is easily understandable. Later on, we renamed our CSV files to represent what data they actually had. We also renamed out Notebooks where we added the name of the data utilising underscores between words. Example: UK_voter_turnout
 
 ### Step 4: Cleaning up notebooks 📌
-In this step we added comments to all notebooks where needed, to further elaborate on where AI was used and what we did in each step. This helped us follow each other’s steps and comprehend the data collection methods better, as we faced some challenges.
+In this step we added comments to all notebooks where needed, to further elaborate on where AI was used and what we did in each step. This helped us follow each other’s steps and work collabratively.
 
 ## Explanation of the process for each notebook:
-The process for each notebook and the code written will not be present in this README file as we made comments and explanations for each step of our notebook, yet, we wanted to make some notes on what we did, generally, within the notebooks to create the desired output.
+Each notebook creates a csv folder on a different variable, which is stored in the data folder. 
 
 At the start of each notebook there is a brief description of the purpose of the notebook.
