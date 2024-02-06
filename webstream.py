@@ -5,7 +5,26 @@ import altair as alt
 from vega_datasets import data
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///Docs/Data/PoliticsandDataSci.db', echo=False, isolation_level="AUTOCOMMIT")
+def plot_line_graph(y_column):
+    # Generic method for plotting line graph from data in interactive table
+    # Create Altair chart
+    with engine.connect() as conn:
+        pass
+    dataframe = pd.read_sql_table("Interactive Data",con=engine)
+    custom_domain = [year for year in range(1960, 2025)]
+    chart = alt.Chart(dataframe).mark_line(
+        color='red'
+    ).encode(
+        x=alt.X('Year:O', title='Year',scale=alt.Scale(domain=custom_domain)),
+        y=alt.Y(f'{y_column}:Q', title=f'{y_column}'),
+        tooltip=['Year:O', f'{y_column}:Q']
+    ).properties(
+        title=f'{y_column} Over Years',
+        width = 500
+    ).interactive()
 
+    # Display the chart
+    return chart
 def createpopulationgeo():
     
     with engine.connect() as conn:
@@ -195,12 +214,21 @@ def show_us():
 
     st.markdown("## Median Household income (2019-2021) against population density")
     st.altair_chart(createpopagainstincome())
+    st.markdown("## GDP pre capita over time")
+    st.altair_chart(plot_line_graph('USA GDP Per Capita (US $)'))
+    st.markdown("## Growth (GDP) over time")
+    st.altair_chart(plot_line_graph('US GDP Growth Rate'))
+
 def show_uk():
     st.markdown("# UK data")
     st.markdown("## Crime rates over 2021 between UK cities")
     st.altair_chart(createcrimeratesbetweenUKcities())
     st.markdown("## Crime by category, London 2022")
     st.altair_chart(createlondoncrimebycategory())
+    st.markdown("## Gdp pre capita ($) over time")
+    st.altair_chart(plot_line_graph("UK GDP Per Capita (US $)"))
+    st.markdown("## UK growth (GDP $) over time")
+    st.altair_chart(plot_line_graph('UK GDP Growth Rate'))
 def show_global():     
     st.markdown("# Global data")
     st.markdown("## Population distribution over time")
