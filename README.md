@@ -25,7 +25,7 @@ https://projects.fivethirtyeight.com/biden-approval-rating/
 http://data.un.org/Data.aspx?q=gini&d=WDI&f=Indicator_Code%3aSI.POV.GINI
 https://www.macrotrends.net/countries/GBR/united-kingdom/gdp-gross-domestic-product
 https://www.macrotrends.net/countries/USA/united-states/gdp-gross-domestic-product
-https://projects.fivethirtyeight.com/biden-approval-rating/polls.json (the URL of the JSON file for hidden API)
+
 
 
 ## Individual contributions
