@@ -5,7 +5,10 @@
 * Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science
 
 
+
 **DATA VISUALISATIONS ARE ON OTHER WEBSITE**
+
+
 
 ## Why we chose our project topic 👀:
 As Politics and Data Science students at LSE, we struggle the politics related data being stored in ways which are hard to interpret such as regression tables or excel files, which makes finding data for essays a very tedious process. Therefore, we sought out a website that is a source of easy to interpret data, that can also be customised to create interactive correlation graphs with simple descriptions underneath the graphs themselves in the USA/UK/Global data portion of the website. 
