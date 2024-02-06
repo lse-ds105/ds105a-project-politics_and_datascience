@@ -168,39 +168,58 @@ def create_gloabl_gini_average():
 
 
 
-st.title('Political Data Science project')
-st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
-st.markdown("* Ayşe Yalçın (ayseyalcin1) | BSc in Politics and Data Science")
-st.markdown("* Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science")
-st.write("This project aims to create easy to interpret, interactive graphs showing interesting correlations we found from various government census data and APIs")
-st.write("It is important to note that any correlations shown do not implicitly imply that a causation exists between the two variables!")
-st.markdown("# Interactive Graph")
-var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
-var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
-st.altair_chart(plot_interactive(var_x,var_y))
-st.markdown("# US data")
-st.markdown("## Population vs Population Density by State")
-col1, col2 = st.columns(2)
-with col1:
-    st.altair_chart(createpopulationgeo())
 
-with col2:
-    st.altair_chart(createpopulationdensitygeo())
 
-st.altair_chart(createbidenpollchart())
+def show_home():
+    st.title('Political Data Science project')
+    st.markdown("* Alex Faith (alexgabriellafaith) | BSc in Politics and Data Science")
+    st.markdown("* Ayşe Yalçın (ayseyalcin1) | BSc in Politics and Data Science")
+    st.markdown("* Maddox Leigh (maddoxleigh) | BSc in Politics and Data Science")
+    st.write("This project aims to create easy to interpret, interactive graphs showing interesting correlations we found from various government census data and APIs")
+    st.write("It is important to note that any correlations shown do not implicitly imply that a causation exists between the two variables!")
+def show_interactive():
+    st.markdown("# Interactive Graph")
+    var_x = st.selectbox("Select an X variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)', 'Voter Turnout in UK'])
+    var_y = st.selectbox("Select a Y variable:", ['Average Global Gini', 'UK GDP Per Capita (US $)', 'UK GDP Growth Rate',	'USA GDP Per Capita (US $)', 'US GDP Growth Rate','Persons Below Poverty (US)','Percent Below Poverty (US)' ,'Voter Turnout in UK'])
+    st.altair_chart(plot_interactive(var_x,var_y))
+def show_us():
+    st.markdown("# US data")
+    st.markdown("## Population vs Population Density by State")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.altair_chart(createpopulationgeo())
 
-st.markdown("## Median Household income (2019-2021) against population density")
-st.altair_chart(createpopagainstincome())
-st.markdown("# UK data")
-st.markdown("## Crime rates over 2021 between UK cities")
-st.altair_chart(createcrimeratesbetweenUKcities())
-st.markdown("## Crime by category, London 2022")
-st.altair_chart(createlondoncrimebycategory())
-st.markdown("# Global data")
-st.markdown("## Population distribution over time")
-st.altair_chart(create_pop_charts())
-st.markdown("## Average global Gini coefficient over time")
-st.altair_chart(create_gloabl_gini_average())
+    with col2:
+        st.altair_chart(createpopulationdensitygeo())
 
+    st.altair_chart(createbidenpollchart())
+
+    st.markdown("## Median Household income (2019-2021) against population density")
+    st.altair_chart(createpopagainstincome())
+def show_uk():
+    st.markdown("# UK data")
+    st.markdown("## Crime rates over 2021 between UK cities")
+    st.altair_chart(createcrimeratesbetweenUKcities())
+    st.markdown("## Crime by category, London 2022")
+    st.altair_chart(createlondoncrimebycategory())
+def show_global():     
+    st.markdown("# Global data")
+    st.markdown("## Population distribution over time")
+    st.altair_chart(create_pop_charts())
+    st.markdown("## Average global Gini coefficient over time")
+    st.altair_chart(create_gloabl_gini_average())
+
+page = st.sidebar.radio("Go to", ['Home', 'Interactive Graph', 'US Data', 'UK Data', 'Global Data'])
+
+if page == 'Home':
+    show_home()
+elif page == 'Interactive Graph':
+    show_interactive()
+elif page == 'US Data':
+    show_us()
+elif page == 'UK Data':
+    show_uk()
+elif page == 'Global Data':
+    show_global()
 
 
