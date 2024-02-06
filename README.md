@@ -1,14 +1,15 @@
 # DS105A Final Project 🔓
 
 ## How to run the code in the notebooks:
+
 Before running any notebooks ensure to install the requirements.txt file in terminal with following command: 
 
-pip install -r requirements.txt
+**pip install -r requirements.txt**
 
 Then begin running notebooks as ordered, each should create a new csv file under the Data folder. The final notebook will create a database that will be used in order to create the website. Once the database is created, you can access the website by running the following common in terminal: streamlit run webstream.py.
 
 ## URL for each source we used:
-The URL links will also be present under the explanation of each graph and the findings section, as we want to show which URL was for what graph.
+These can also be located under each graph on both websites
 
 https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area
 https://aspe.hhs.gov/information-poverty-income-statistics-tables
@@ -28,7 +29,7 @@ https://projects.fivethirtyeight.com/biden-approval-rating/polls.json (the URL o
 
 
 ## Individual contributions
-Alex: Web scraping, hidden API data, Altair graphs for the relative notebooks, graph analysing, GitHub organisation
+Alex: Web scraping, hidden API data, API data, Altair graphs for the relative notebooks, graph analysing, GitHub organisation
 
 Ayse: Web scraping, Altair graphs for relative notebooks, README file, graph analysing, GitHub organisation
 
