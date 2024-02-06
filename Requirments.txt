@@ -1,0 +1,6 @@
+altair==5.1
+requests
+pandas
+sqlalchemy
+statsmodels
+vega_datasets
