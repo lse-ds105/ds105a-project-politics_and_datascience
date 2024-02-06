@@ -49,7 +49,7 @@ Source =  https://data.police.uk/docs/method/crime-street/
 ### Crime category data:
 Explanation = This bar chart shows the number of types of crime around kings cross, London, in 2021.
 
-Findings = There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of weapon with XXX. 
+Findings = There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of a weapon with 109. 
 
 Consider = Why is there such a stark difference? Consider that the area of kings cross is surrounded by various drinking locations, which may explain the high proportion of antisocial behaviours.
 
