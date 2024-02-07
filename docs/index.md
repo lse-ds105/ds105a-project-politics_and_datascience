@@ -19,8 +19,7 @@ The descriptions help politics students, with no formal quatative skills, to mak
 We utilised the following methods to gather data throughout the project:
 
 ### Method 1: Web Scraping 💻
-We gathered the majority of our data from different sources through web scraping credible websites such as census.gov and offical government pages such as ASPE. One problem we faced was, WIKI LINK PROBLEM.
-
+We gathered the majority of our data from different sources through web scraping credible websites such as census.gov and offical government pages such as ASPE.
 
 
 ### Method 2: APIs 💡
