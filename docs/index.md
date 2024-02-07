@@ -19,8 +19,7 @@ The descriptions help politics students, with no formal quatative skills, to mak
 We utilised the following methods to gather data throughout the project:
 
 ### Method 1: Web Scraping 💻
-We gathered the majority of our data from different sources through web scraping credible websites such as census.gov and offical government pages such as ASPE. One problem we faced was, WIKI LINK PROBLEM.
-
+We gathered the majority of our data from different sources through web scraping credible websites such as census.gov and offical government pages such as ASPE. This was particularly useful for trivial data, such as land mass, which did not require the use APIs- recognising what data could be easily scraped from the web saved us a lot of time, due to the problems we faced with APIs. 
 
 
 ### Method 2: APIs 💡
@@ -49,7 +48,7 @@ Source =  https://data.police.uk/docs/method/crime-street/
 ### Crime category data:
 Explanation = This bar chart shows the number of types of crime around kings cross, London, in 2021.
 
-Findings = There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of weapon with XXX. 
+Findings = There is a clear range of counts in these findings with antisocial having around 7,000 vs. possession of a weapon with 109. 
 
 Consider = Why is there such a stark difference? Consider that the area of kings cross is surrounded by various drinking locations, which may explain the high proportion of antisocial behaviours.
 
