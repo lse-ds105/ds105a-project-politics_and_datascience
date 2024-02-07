@@ -29,8 +29,8 @@ https://www.macrotrends.net/countries/USA/united-states/gdp-gross-domestic-produ
 
 
 ## Individual contributions
-Alex: Web scraping, hidden API data, API data, Altair graphs for the relative notebooks, graph analysing, GitHub organisation
+Alex: Web scraping, hidden API data, API data, Altair graphs for the relative notebooks, graph analysing, GitHub organisation, editing of GitHub website
 
-Ayse: Web scraping, Altair graphs for relative notebooks, README file, graph analysing, GitHub organisation
+Ayse: Web scraping, Altair graphs for relative notebooks, README file, graph analysing, writing on GitHub website, GitHub organisation
 
 Maddox: Website creation and editing, Altair graphs editing, notebook editing, Github organisation 
