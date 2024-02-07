@@ -244,7 +244,11 @@ def show_us():
     st.markdown(" It is important to assert caution here and not blindly reduce the change of approval ratings to these events, there are other variables that may also contribute to a change in approval ratings: increasing polarisation, protests, media coverage and scandals.")
     st.markdown("## Median Household income (2019-2021) against population density")
     st.altair_chart(createpopagainstincome())
-    
+    st.markdown("Sources = https://www.census.gov/quickfacts/fact/table/US/PST045222, https://api.census.gov ,https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_area")
+    st.markdown("This graph plots the average median household income between 2019 and 2021 against the population density of states")
+    st.markdown("As can be seen there is a clear correlation between income and population denisty, this is likely due to densely populated areas being more urban with more jobs and oppurtunity")
+
+
     st.markdown("## GDP pre capita over time")
     st.altair_chart(plot_line_graph('USA GDP Per Capita (US $)'))
     st.markdown("Source = https://www.macrotrends.net/countries/USA/united-states/gdp-per-capita")
@@ -303,7 +307,7 @@ def show_global():
     st.markdown("## Average global Gini coefficient over time")
     st.altair_chart(create_gloabl_gini_average())
     st.markdown("Source = http://data.un.org/Data.aspx?q=gini&d=WDI&f=Indicator_Code%3ASI.POV.GINI")
-    st.markdown("This graph depicts the average global gini index rate over the years, where the gini index shows economic inequality, the higher the gini, the higher the economic inequality.")
+    st.markdown("This graph depicts the average global gini index rate over the years. The gini coefficient is a measure of income distribution, the higher the gini coefficient, the higher the inequality.")
     st.markdown("There is a general increase in the trend of the global gini index, which can be constituted to the wages and jobs of lower-skilled workers in tradable sectors, especially in developed economies.")
     st.markdown("It is important to consider that as the average global gini is seen to be fluctuating, it can be seen that though some countries are moving towards an equal industrialised economic system, some countries still remain economically less developed, with more inequality, not allowing for a steady increase or decrease in the average global index.")
 

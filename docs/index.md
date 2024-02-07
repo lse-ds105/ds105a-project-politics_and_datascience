@@ -84,7 +84,7 @@ Sources = https://api.census.gov ,https://en.wikipedia.org/wiki/List_of_U.S._sta
 
 ### Average global gini over the years graph:
 
-Explanation = This graph depicts the average global gini index rate over the years, where the gini index shows economic inequality, the higher the gini, the higher the economic inequality.
+Explanation = This graph depicts the average global gini index rate over the years. The gini coefficient is a measure of income distribution, the higher the gini coefficient, the higher the inequality.
 
 Findings = There is a general increase in the trend of the global gini index, which can be constituted to the wages and jobs of lower-skilled workers in tradable sectors, especially in developed economies.
 
